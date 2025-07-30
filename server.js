@@ -5,10 +5,6 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;  // Renderが指定するポートを優先
-app.listen(port, () => {
-  console.log(`サーバー起動：http://localhost:${port}`);
-});
-
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -49,6 +45,7 @@ app.get('/get-shifts', (req, res) => {
   });
 });
 
+// ポートでの待機はここだけにする
 app.listen(port, () => {
   console.log(`サーバー起動：http://localhost:${port}`);
 });
