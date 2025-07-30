@@ -20,7 +20,7 @@
       const date = document.getElementById('date').value;
       const shift = document.getElementById('shift').value;
 
-      await fetch('http://localhost:3000/save-shift', {
+      await fetch('/save-shift', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user, date, shift })
