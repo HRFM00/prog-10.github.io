@@ -30,18 +30,29 @@
     }
 
     async function loadShifts() {
-      const res = await fetch('http://localhost:3000/get-shifts');
-      const data = await res.json();
-      const list = document.getElementById('shiftList');
-      list.innerHTML = '';
-      data.forEach(row => {
-        const li = document.createElement('li');
-        li.textContent = `${row.user} - ${row.date} - ${row.shift}`;
-        list.appendChild(li);
-      });
+      try {
+        const response = await fetch('/get-shifts'); // 同一ドメインなら相対パスでOK
+        if (!response.ok) throw new Error('取得エラー');
+
+        const shifts = await response.json();
+
+        const list = document.getElementById('shiftList');
+        list.innerHTML = ''; // クリア
+
+        shifts.forEach(shift => {
+          const li = document.createElement('li');
+          li.textContent = `${shift.user} さんの ${shift.date} のシフトは ${shift.shift}`;
+          list.appendChild(li);
+        });
+
+      } catch (error) {
+        console.error(error);
+        alert('シフトの取得に失敗しました');
+      }
     }
 
-    loadShifts(); // 初回ロード
+    // ページ読み込み時に呼ぶ
+    window.onload = loadShifts;
   </script>
 </body>
 </html>
