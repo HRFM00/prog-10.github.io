@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>シフト管理</title>
+</head>
+<body>
+  <h1>シフト管理アプリ</h1>
+  <label>ユーザー名：<input type="text" id="username"></label><br>
+  <label>日付：<input type="date" id="date"></label><br>
+  <label>シフト：<input type="text" id="shift"></label><br>
+  <button onclick="saveShift()">保存</button>
+
+  <h2>登録済みシフト</h2>
+  <ul id="shiftList"></ul>
+
+  <script>
+    async function saveShift() {
+      const user = document.getElementById('username').value;
+      const date = document.getElementById('date').value;
+      const shift = document.getElementById('shift').value;
+
+      await fetch('http://localhost:3000/save-shift', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user, date, shift })
+      });
+
+      loadShifts();
+    }
+
+    async function loadShifts() {
+      const res = await fetch('http://localhost:3000/get-shifts');
+      const data = await res.json();
+      const list = document.getElementById('shiftList');
+      list.innerHTML = '';
+      data.forEach(row => {
+        const li = document.createElement('li');
+        li.textContent = `${row.user} - ${row.date} - ${row.shift}`;
+        list.appendChild(li);
+      });
+    }
+
+    loadShifts(); // 初回ロード
+  </script>
+</body>
+</html>
