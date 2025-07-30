@@ -5,9 +5,6 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`サーバー起動：http://localhost:${port}`);
-});
 
 
 app.use(cors());
