@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 // SQLite データベースファイルを作成（または既存のものを使用）
 const db = new sqlite3.Database('./shift.db', (err) => {
@@ -50,3 +51,4 @@ app.get('/get-shifts', (req, res) => {
 app.listen(port, () => {
   console.log(`サーバー起動：http://localhost:${port}`);
 });
+
