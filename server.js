@@ -4,7 +4,11 @@ const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 3000;  // Renderが指定するポートを優先
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`サーバー起動：http://localhost:${port}`);
+});
+
 
 app.use(cors());
 app.use(bodyParser.json());
